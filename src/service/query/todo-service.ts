@@ -2,7 +2,10 @@
 
 import { responceTodoT } from "./types";
 
-const url = process.env.BACKEND_URL;
+const url =
+  process.env.NODE_ENV === "production"
+    ? "https://your-backend-url.com"
+    : "http://localhost:3600";
 
 export const getTodoData = async () => {
   const res = await fetch(`${url}/todos`, { next: { tags: ["todo-data"] } });
