@@ -9,18 +9,15 @@ export const deleteTodo = async (id: number | string) => {
   });
 
   if (!res.ok) {
-    const errorText = await res.text(); // Log the HTML or error response
-    console.error("Error response:", errorText);
-    throw new Error(`Request failed with status ${res.status}`);
+    throw new Error("Error");
   }
+  revalidateTag("todo-data");
 
-  try {
-    const data = await res.json(); // Only parse as JSON if the response is valid
-    console.log(data);
-  } catch (error) {
-    console.error("Failed to parse response as JSON", error);
-  }
+  const data = await res.json();
+
+  return data;
 };
+
 export const addTodo = async (todo: responceTodoT) => {
   const res = await fetch(`${url}/todos`, {
     method: "POST",
